@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Disk I/O Performance Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: #1e293b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            padding: 25px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin: 0;
+            color: #475569;
+        }
+
+        .card p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #334155;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .prediction {
+            margin-top: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+
+        .prediction span {
+            color: #2563eb;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .refresh {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>ML-Based Disk I/O Performance Analysis</h1>
+    <p>Using OS Metrics, DBMS, and Machine Learning</p>
+</div>
+
+<div class="container">
+
+    <div class="cards">
+        <div class="card">
+            <h3>CPU Usage</h3>
+            <p>{{ cpu }}%</p>
+        </div>
+
+        <div class="card">
+            <h3>Memory Usage</h3>
+            <p>{{ memory }}%</p>
+        </div>
+
+        <div class="card">
+            <h3>Disk Read</h3>
+            <p>{{ read_speed }} MB/s</p>
+        </div>
+
+        <div class="card">
+            <h3>Disk Write</h3>
+            <p>{{ write_speed }} MB/s</p>
+        </div>
+
+        <div class="card">
+            <h3>Actual Load</h3>
+            <p>{{ actual_load }}</p>
+        </div>
+    </div>
+
+    <div class="prediction">
+        <h2>Predicted Disk Load</h2>
+        <span>{{ predicted_load }}</span>
+    </div>
+
+    <div class="refresh">
+        <form action="/">
+            <button type="submit">Refresh Data</button>
+        </form>
+    </div>
+
+    <h2>Recent Disk I/O Records</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>CPU Usage</th>
+            <th>Memory Usage</th>
+            <th>Disk Read</th>
+            <th>Disk Write</th>
+            <th>Disk Load</th>
+        </tr>
+
+        {% for row in records %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.cpu_usage }}</td>
+            <td>{{ row.memory_usage }}</td>
+            <td>{{ row.disk_read }}</td>
+            <td>{{ row.disk_write }}</td>
+            <td>{{ row.disk_load }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+</body>
+</html>
